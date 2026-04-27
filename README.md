@@ -7,18 +7,21 @@ Este é um mini-game interativo projetado para ajudar músicos e estudantes de m
 O objetivo central foi reduzir a fricção entre a leitura da nota e a resposta motora. Para isso, o design seguiu alguns princípios fundamentais:
 
 1.  **Fidelidade Visual**: Mesmo com um tema moderno e escuro disponível para a interface, a "folha" da partitura permanece sempre branca com linhas pretas. Isso foi feito para garantir que o cérebro do estudante se conecte instantaneamente ao padrão que encontrará em partituras reais.
-2.  **Feedback Imediato**: O jogo utiliza efeitos visuais (overlays verdes e vermelhos) e animações de "shake" para dar feedback instantâneo sobre o acerto ou erro, reforçando o aprendizado.
-3.  **Flexibilidade de Estudo**: Adicionamos a opção de praticar tanto a **Clave de Sol** quanto a **Clave de Fá**, ou ambas simultaneamente, permitindo que o usuário foque em sua maior dificuldade.
-4.  **Customização**: O usuário pode ajustar o tempo de resposta e o intervalo entre as notas, permitindo que o desafio cresça conforme sua evolução.
+2.  **Teclado de Piano Virtual**: Em vez de botões genéricos, a interface de resposta simula as teclas de um piano. Isso cria uma forte conexão motora para pianistas. O nome das notas pode ser ocultado nas configurações para um desafio mais avançado.
+3.  **Síntese de Áudio (Web Audio API)**: Ao acertar uma nota, o jogo gera e toca a frequência exata (em Hz) correspondente àquela nota musical. Essa resposta tátil/sonora ajuda significativamente no treinamento do ouvido absoluto e relativo.
+4.  **Feedback Imediato**: O jogo utiliza efeitos visuais (overlays verdes e vermelhos) e animações de "shake" para dar feedback instantâneo sobre o acerto ou erro.
+5.  **Flexibilidade de Estudo**: Opção de praticar tanto a **Clave de Sol** quanto a **Clave de Fá**, ou ambas simultaneamente.
+6.  **Customização**: Ajuste o tempo de resposta, o intervalo entre as notas, ligue/desligue o som e os nomes das teclas.
 
 ## 🛠️ Tecnologias Utilizadas
 
 O projeto foi construído utilizando tecnologias web puras (Vanilla) para garantir máxima performance e portabilidade:
 
 *   **HTML5**: Estrutura semântica e acessível.
-*   **CSS3**: Design moderno com variáveis CSS, Glassmorphism e animações fluidas. Totalmente responsivo para uso em dispositivos móveis.
-*   **JavaScript (ES6+)**: Lógica do motor do jogo, gerenciamento de estado e manipulação dinâmica de SVG para renderização das notas musicais.
-*   **SVG**: Utilizado para desenhar a pauta e as notas com precisão matemática, garantindo que o visual seja nítido em qualquer nível de zoom.
+*   **CSS3**: Design moderno com variáveis CSS, Glassmorphism, cálculos matemáticos (`calc()`) para posicionamento responsivo do teclado e animações fluidas.
+*   **JavaScript (ES6+)**: Motor do jogo, gerenciamento de estado e manipulação dinâmica do DOM.
+*   **Web Audio API**: Geração procedural (síntese) dos sons das notas utilizando osciladores em Vanilla JS, eliminando a necessidade de baixar arquivos de áudio pesados e driblando bloqueios de Autoplay em navegadores de celular.
+*   **SVG**: Utilizado para desenhar a pauta e usar fontes unicode perfeitas para as claves musicais.
 
 ## 📱 Responsividade
 
