@@ -1,0 +1,418 @@
+:root {
+    /* Dark Theme (Default) */
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --accent: #f59e0b;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --success: #22c55e;
+    --error: #ef4444;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-main: 'Outfit', sans-serif;
+    --staff-color: #ffffff;
+    --overlay-bg: rgba(15, 23, 42, 0.9);
+    --bg-gradient-1: rgba(99, 102, 241, 0.15);
+    --bg-gradient-2: rgba(245, 158, 11, 0.1);
+    --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --staff-bg: #ffffff;
+    --staff-fg: #000000;
+}
+
+[data-theme="light"] {
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --success: #16a34a;
+    --error: #dc2626;
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --staff-color: #000000;
+    --overlay-bg: rgba(255, 255, 255, 0.9);
+    --bg-gradient-1: rgba(79, 70, 229, 0.05);
+    --bg-gradient-2: rgba(245, 158, 11, 0.05);
+    --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(at 0% 0%, var(--bg-gradient-1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, var(--bg-gradient-2) 0px, transparent 50%);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 600px;
+    height: 100vh;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.score-board {
+    display: flex;
+    gap: 20px;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.score-item .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.score-item .value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.icon-button {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(8px);
+}
+
+.icon-button:hover {
+    background: var(--glass-border);
+    transform: rotate(30deg);
+}
+
+.icon-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Main Display */
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.staff-card {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--staff-bg);
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.timer-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: var(--primary);
+    width: 100%;
+    transition: width 0.1s linear;
+}
+
+#staff-visual {
+    width: 90%;
+    height: 80%;
+}
+
+.feedback-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.feedback-overlay.correct {
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.2) 0%, transparent 70%);
+    opacity: 1;
+}
+
+.feedback-overlay.wrong {
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%);
+    opacity: 1;
+}
+
+.message-display {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    height: 1.5em;
+    text-align: center;
+}
+
+/* Footer / Controls */
+.game-footer {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.note-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+@media (min-width: 480px) {
+    .note-grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+.note-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    padding: 15px 10px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
+}
+
+.note-btn:hover {
+    transform: translateY(-4px);
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.note-btn:active {
+    transform: scale(0.95);
+}
+
+/* Overlays */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.overlay.active {
+    display: flex;
+}
+
+.overlay-content {
+    text-align: center;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 32px;
+    border: 1px solid var(--glass-border);
+    max-width: 400px;
+    width: 100%;
+}
+
+.overlay-content h1, .overlay-content h2 {
+    margin-bottom: 15px;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.overlay-content p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.primary-btn:hover {
+    background: var(--primary-hover);
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+}
+
+.error-text {
+    color: var(--error);
+}
+
+/* Settings Panel */
+.settings-panel {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+    background: var(--bg-color);
+    border-left: 1px solid var(--glass-border);
+    z-index: 300;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.settings-panel.active {
+    right: 0;
+}
+
+@media (max-width: 480px) {
+    .settings-panel {
+        max-width: 100%;
+    }
+    
+    .app-container {
+        padding: 15px;
+    }
+    
+    .score-item .value {
+        font-size: 1.2rem;
+    }
+    
+    .staff-card {
+        border-radius: 16px;
+    }
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.setting-group {
+    margin-bottom: 30px;
+}
+
+.setting-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary);
+}
+
+.setting-group span {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.clef-selection {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.clef-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.clef-option input {
+    display: none;
+}
+
+.clef-box {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.clef-option input:checked + .clef-box {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.2s ease-in-out;
+}
