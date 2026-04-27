@@ -77,31 +77,43 @@ const elements = {
     staffCard: document.getElementById('staff-container'),
     clefInputs: document.querySelectorAll('input[name="clef-type"]'),
     themeInputs: document.querySelectorAll('input[name="theme-type"]'),
-    soundToggle: document.getElementById('sound-toggle')
+    soundToggle: document.getElementById('sound-toggle'),
+    labelsToggle: document.getElementById('labels-toggle'),
+    pianoKeyboard: document.getElementById('piano-keyboard')
 };
 
 // --- Áudio ---
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audioCtx;
+
+function getAudioContext() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    return audioCtx;
+}
 
 function playSound(freq) {
     if (!elements.soundToggle.checked || !freq) return;
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const ctx = getAudioContext();
     
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
+    const oscillator = ctx.createOscillator();
+    const gainNode = ctx.createGain();
     
     oscillator.type = 'triangle';
-    oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    oscillator.frequency.setValueAtTime(freq, ctx.currentTime);
     
-    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.0);
+    gainNode.gain.setValueAtTime(0, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.05);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.0);
     
     oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+    gainNode.connect(ctx.destination);
     
     oscillator.start();
-    oscillator.stop(audioCtx.currentTime + 1.0);
+    oscillator.stop(ctx.currentTime + 1.0);
 }
 
 // --- Inicialização ---
@@ -152,6 +164,19 @@ function setupEventListeners() {
             applyTheme(state.theme);
         });
     });
+
+    elements.labelsToggle.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            elements.pianoKeyboard.classList.remove('hide-labels');
+        } else {
+            elements.pianoKeyboard.classList.add('hide-labels');
+        }
+    });
+
+    // Estado inicial dos rótulos
+    if (!elements.labelsToggle.checked) {
+        elements.pianoKeyboard.classList.add('hide-labels');
+    }
 }
 
 function applyTheme(theme) {
@@ -162,6 +187,7 @@ function applyTheme(theme) {
 // --- Lógica do Jogo ---
 
 function startGame() {
+    getAudioContext(); // Desbloqueia o áudio no primeiro clique do usuário
     state.isPlaying = true;
     state.currentScore = 0;
     elements.currentScore.textContent = '0';

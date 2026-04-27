@@ -195,40 +195,77 @@ body {
     margin-bottom: 20px;
 }
 
-.note-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+/* Piano Keyboard */
+.piano-keyboard {
+    display: flex;
+    position: relative;
+    height: 160px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 8px 8px 12px 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: #111;
+    border: 2px solid var(--glass-border);
 }
 
-@media (min-width: 480px) {
-    .note-grid {
-        grid-template-columns: repeat(7, 1fr);
-    }
-}
-
-.note-btn {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    color: var(--text);
-    padding: 15px 10px;
-    border-radius: 16px;
-    font-size: 1rem;
-    font-weight: 600;
+.key.white {
+    flex: 1;
+    background: #ffffff;
+    border-right: 1px solid #ccc;
+    position: relative;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 15px;
+    color: #333;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.1s;
+    user-select: none;
 }
 
-.note-btn:hover {
-    transform: translateY(-4px);
-    background: var(--primary);
-    border-color: var(--primary);
+.key.white:last-child {
+    border-right: none;
 }
 
-.note-btn:active {
-    transform: scale(0.95);
+.key.white:hover {
+    background: #f0f0f0;
 }
+
+.key.white:active {
+    background: #d4d4d4;
+}
+
+.key.black {
+    position: absolute;
+    width: calc(100% / 7 * 0.55);
+    height: 60%;
+    background: linear-gradient(180deg, #333 0%, #000 100%);
+    z-index: 10;
+    border-radius: 0 0 4px 4px;
+    cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.4);
+}
+
+.key.black:active {
+    background: #000;
+}
+
+/* Positioning black keys */
+.key.black:nth-child(2) { left: calc((100% / 7) * 1 - (100% / 7 * 0.275)); } /* C# */
+.key.black:nth-child(4) { left: calc((100% / 7) * 2 - (100% / 7 * 0.275)); } /* D# */
+.key.black:nth-child(7) { left: calc((100% / 7) * 4 - (100% / 7 * 0.275)); } /* F# */
+.key.black:nth-child(9) { left: calc((100% / 7) * 5 - (100% / 7 * 0.275)); } /* G# */
+.key.black:nth-child(11) { left: calc((100% / 7) * 6 - (100% / 7 * 0.275)); } /* A# */
+
+/* Configuração para esconder nomes */
+.piano-keyboard.hide-labels .key-label {
+    display: none;
+}
+
 
 /* Overlays */
 .overlay {

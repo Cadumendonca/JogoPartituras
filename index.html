@@ -50,14 +50,19 @@
 
         <!-- Interaction Area -->
         <footer class="game-footer">
-            <div id="note-buttons" class="note-grid">
-                <button class="note-btn" data-note="Dó">Dó</button>
-                <button class="note-btn" data-note="Ré">Ré</button>
-                <button class="note-btn" data-note="Mi">Mi</button>
-                <button class="note-btn" data-note="Fá">Fá</button>
-                <button class="note-btn" data-note="Sol">Sol</button>
-                <button class="note-btn" data-note="Lá">Lá</button>
-                <button class="note-btn" data-note="Si">Si</button>
+            <div class="piano-keyboard" id="piano-keyboard">
+                <div class="key white note-btn" data-note="Dó"><span class="key-label">Dó</span></div>
+                <div class="key black"></div>
+                <div class="key white note-btn" data-note="Ré"><span class="key-label">Ré</span></div>
+                <div class="key black"></div>
+                <div class="key white note-btn" data-note="Mi"><span class="key-label">Mi</span></div>
+                <div class="key white note-btn" data-note="Fá"><span class="key-label">Fá</span></div>
+                <div class="key black"></div>
+                <div class="key white note-btn" data-note="Sol"><span class="key-label">Sol</span></div>
+                <div class="key black"></div>
+                <div class="key white note-btn" data-note="Lá"><span class="key-label">Lá</span></div>
+                <div class="key black"></div>
+                <div class="key white note-btn" data-note="Si"><span class="key-label">Si</span></div>
             </div>
             
             <div id="start-screen" class="overlay active">
@@ -131,9 +136,15 @@
                     <span id="timeout-value">5000ms</span>
                 </div>
                 <div class="setting-group">
-                    <label class="sound-toggle-label">
+                    <label class="toggle-label">
                         <input type="checkbox" id="sound-toggle" checked>
                         Tocar som da nota ao acertar
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="labels-toggle" checked>
+                        Mostrar nomes nas teclas
                     </label>
                 </div>
             </div>
