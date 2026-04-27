@@ -374,6 +374,15 @@ body {
     margin-bottom: 30px;
 }
 
+.sound-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
 .setting-group label {
     display: block;
     font-size: 0.9rem;

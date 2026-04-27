@@ -20,34 +20,34 @@ const state = {
 
 const notesDatabase = {
     sol: [
-        { name: 'Dó', y: 70, ledger: true, clef: 'sol' },   // C4
-        { name: 'Ré', y: 65, ledger: false, clef: 'sol' },  // D4
-        { name: 'Mi', y: 60, ledger: false, clef: 'sol' },  // E4
-        { name: 'Fá', y: 55, ledger: false, clef: 'sol' },  // F4
-        { name: 'Sol', y: 50, ledger: false, clef: 'sol' }, // G4
-        { name: 'Lá', y: 45, ledger: false, clef: 'sol' },  // A4
-        { name: 'Si', y: 40, ledger: false, clef: 'sol' },  // B4
-        { name: 'Dó', y: 35, ledger: false, clef: 'sol' },  // C5
-        { name: 'Ré', y: 30, ledger: false, clef: 'sol' },  // D5
-        { name: 'Mi', y: 25, ledger: false, clef: 'sol' },  // E5
-        { name: 'Fá', y: 20, ledger: false, clef: 'sol' },  // F5
-        { name: 'Sol', y: 15, ledger: false, clef: 'sol' }, // G5
-        { name: 'Lá', y: 10, ledger: true, clef: 'sol' },   // A5
+        { name: 'Dó', y: 70, ledger: true, clef: 'sol', freq: 261.63 },   // C4
+        { name: 'Ré', y: 65, ledger: false, clef: 'sol', freq: 293.66 },  // D4
+        { name: 'Mi', y: 60, ledger: false, clef: 'sol', freq: 329.63 },  // E4
+        { name: 'Fá', y: 55, ledger: false, clef: 'sol', freq: 349.23 },  // F4
+        { name: 'Sol', y: 50, ledger: false, clef: 'sol', freq: 392.00 }, // G4
+        { name: 'Lá', y: 45, ledger: false, clef: 'sol', freq: 440.00 },  // A4
+        { name: 'Si', y: 40, ledger: false, clef: 'sol', freq: 493.88 },  // B4
+        { name: 'Dó', y: 35, ledger: false, clef: 'sol', freq: 523.25 },  // C5
+        { name: 'Ré', y: 30, ledger: false, clef: 'sol', freq: 587.33 },  // D5
+        { name: 'Mi', y: 25, ledger: false, clef: 'sol', freq: 659.25 },  // E5
+        { name: 'Fá', y: 20, ledger: false, clef: 'sol', freq: 698.46 },  // F5
+        { name: 'Sol', y: 15, ledger: false, clef: 'sol', freq: 783.99 }, // G5
+        { name: 'Lá', y: 10, ledger: true, clef: 'sol', freq: 880.00 },   // A5
     ],
     fa: [
-        { name: 'Mi', y: 70, ledger: true, clef: 'fa' },    // E2
-        { name: 'Fá', y: 65, ledger: false, clef: 'fa' },   // F2
-        { name: 'Sol', y: 60, ledger: false, clef: 'fa' },  // G2
-        { name: 'Lá', y: 55, ledger: false, clef: 'fa' },   // A2
-        { name: 'Si', y: 50, ledger: false, clef: 'fa' },   // B2
-        { name: 'Dó', y: 45, ledger: false, clef: 'fa' },   // C3
-        { name: 'Ré', y: 40, ledger: false, clef: 'fa' },   // D3
-        { name: 'Mi', y: 35, ledger: false, clef: 'fa' },   // E3
-        { name: 'Fá', y: 30, ledger: false, clef: 'fa' },   // F3
-        { name: 'Sol', y: 25, ledger: false, clef: 'fa' },  // G3
-        { name: 'Lá', y: 20, ledger: false, clef: 'fa' },   // A3
-        { name: 'Si', y: 15, ledger: false, clef: 'fa' },   // B3
-        { name: 'Dó', y: 10, ledger: true, clef: 'fa' },    // C4
+        { name: 'Mi', y: 70, ledger: true, clef: 'fa', freq: 82.41 },    // E2
+        { name: 'Fá', y: 65, ledger: false, clef: 'fa', freq: 87.31 },   // F2
+        { name: 'Sol', y: 60, ledger: false, clef: 'fa', freq: 98.00 },  // G2
+        { name: 'Lá', y: 55, ledger: false, clef: 'fa', freq: 110.00 },  // A2
+        { name: 'Si', y: 50, ledger: false, clef: 'fa', freq: 123.47 },  // B2
+        { name: 'Dó', y: 45, ledger: false, clef: 'fa', freq: 130.81 },  // C3
+        { name: 'Ré', y: 40, ledger: false, clef: 'fa', freq: 146.83 },  // D3
+        { name: 'Mi', y: 35, ledger: false, clef: 'fa', freq: 164.81 },  // E3
+        { name: 'Fá', y: 30, ledger: false, clef: 'fa', freq: 174.61 },  // F3
+        { name: 'Sol', y: 25, ledger: false, clef: 'fa', freq: 196.00 },  // G3
+        { name: 'Lá', y: 20, ledger: false, clef: 'fa', freq: 220.00 },   // A3
+        { name: 'Si', y: 15, ledger: false, clef: 'fa', freq: 246.94 },   // B3
+        { name: 'Dó', y: 10, ledger: true, clef: 'fa', freq: 261.63 },    // C4
     ]
 };
 
@@ -76,8 +76,33 @@ const elements = {
     feedbackOverlay: document.getElementById('feedback-overlay'),
     staffCard: document.getElementById('staff-container'),
     clefInputs: document.querySelectorAll('input[name="clef-type"]'),
-    themeInputs: document.querySelectorAll('input[name="theme-type"]')
+    themeInputs: document.querySelectorAll('input[name="theme-type"]'),
+    soundToggle: document.getElementById('sound-toggle')
 };
+
+// --- Áudio ---
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(freq) {
+    if (!elements.soundToggle.checked || !freq) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.0);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + 1.0);
+}
 
 // --- Inicialização ---
 function init() {
@@ -214,6 +239,11 @@ function handleCorrectAnswer() {
     elements.currentScore.textContent = state.currentScore;
     showFeedback('correct');
     
+    // Tocar o som da nota
+    if (state.currentNote && state.currentNote.freq) {
+        playSound(state.currentNote.freq);
+    }
+    
     // Aguardar o intervalo configurado antes da próxima nota
     state.isPlaying = false; // Pausa temporária para o delay
     elements.timerBar.style.width = '0%';
@@ -261,7 +291,7 @@ function createStaffBase(clefType = 'sol') {
         clefPath = `<text x="15" y="62" font-size="65" font-family="serif" fill="${color}">&#119070;</text>`;
     } else {
         // Clave de Fá (Unicode: 𝄢)
-        clefPath = `<text x="15" y="52" font-size="65" font-family="serif" fill="${color}">&#119074;</text>`;
+        clefPath = `<text x="15" y="60" font-size="65" font-family="serif" fill="${color}">&#119074;</text>`;
     }
 
     return `
