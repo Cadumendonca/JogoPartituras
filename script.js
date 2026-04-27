@@ -7,8 +7,8 @@
 const state = {
     currentScore: 0,
     bestScore: localStorage.getItem('bestScore') || 0,
-    interval: 5000, 
-    timeout: 3000,  
+    interval: 2000, 
+    timeout: 5000,  
     isPlaying: false,
     currentNote: null,
     gameLoopId: null,
@@ -65,7 +65,9 @@ const elements = {
     settingsToggle: document.getElementById('settings-toggle'),
     settingsClose: document.getElementById('settings-close'),
     startBtn: document.getElementById('start-btn'),
+    settingsStartBtn: document.getElementById('settings-start-btn'),
     restartBtn: document.getElementById('restart-btn'),
+    settingsGameoverBtn: document.getElementById('settings-gameover-btn'),
     finalScoreText: document.getElementById('final-score-text'),
     intervalInput: document.getElementById('interval-input'),
     timeoutInput: document.getElementById('timeout-input'),
@@ -95,6 +97,10 @@ function setupEventListeners() {
 
     elements.settingsToggle.addEventListener('click', () => elements.settingsPanel.classList.toggle('active'));
     elements.settingsClose.addEventListener('click', () => elements.settingsPanel.classList.remove('active'));
+    
+    // Abrir configurações a partir dos popups
+    elements.settingsStartBtn.addEventListener('click', () => elements.settingsPanel.classList.add('active'));
+    elements.settingsGameoverBtn.addEventListener('click', () => elements.settingsPanel.classList.add('active'));
 
     // Configurações
     elements.intervalInput.addEventListener('input', (e) => {
@@ -145,8 +151,7 @@ function nextTurn() {
     if (!state.isPlaying) return;
 
     // Limpar timers anteriores
-    clearTimeout(state.responseTimerId);
-    clearInterval(state.gameLoopId);
+    cancelAnimationFrame(state.responseTimerId);
 
     // Escolher nova nota
     let pool = [];
@@ -242,7 +247,7 @@ function gameOver(reason) {
 // --- Renderização SVG ---
 
 function renderEmptyStaff() {
-    const clef = state.isPlaying && state.currentNote ? state.currentNote.clef : (state.selectedClef === 'both' ? 'sol' : state.selectedClef);
+    const clef = state.selectedClef === 'both' ? 'sol' : state.selectedClef;
     const svg = createStaffBase(clef);
     elements.staffVisual.innerHTML = svg;
 }
@@ -252,17 +257,11 @@ function createStaffBase(clefType = 'sol') {
     let clefPath = '';
 
     if (clefType === 'sol') {
-        // Clave de Sol
-        clefPath = `<path d="M22.5,65.3c-0.2,0-0.4,0-0.6-0.1c-1.3-0.5-2.2-1.9-2.2-3.6c0-1.2,0.5-2.5,1.4-3.7c1-1.3,2.4-2.5,3.9-3.5 c0.3-0.2,0.6-0.4,0.9-0.6c0.5-0.3,0.9-0.6,1.4-0.9c0.9-0.6,1.6-1.1,2.1-1.5c1-0.9,1.6-1.8,1.6-2.9c0-1.3-0.8-2.3-2-2.3 c-0.8,0-1.6,0.5-2.1,1.3c-0.5,0.8-0.7,1.7-0.7,2.4c0,0.4,0.3,0.7,0.7,0.7c0.4,0,0.7-0.3,0.7-0.7c0-0.5,0.1-1.1,0.4-1.6 c0.3-0.4,0.7-0.7,1-0.7c0.4,0,0.6,0.3,0.6,0.9c0,0.8-0.5,1.5-1.4,2.3c-0.5,0.4-1.2,0.9-2,1.5c-0.5,0.3-0.9,0.6-1.4,0.9 c-0.3,0.2-0.6,0.4-0.9,0.6c-1.7,1.1-3.2,2.5-4.4,4.1c-1.1,1.5-1.7,3.2-1.7,4.8c0,2.3,1.3,4.2,3.1,4.9c0.2,0.1,0.4,0.1,0.6,0.1 c0.4,0,0.7-0.3,0.7-0.7C23.3,65.6,22.9,65.3,22.5,65.3z M30.9,47.4c-0.5,0.3-0.9,0.6-1.4,0.9c-0.3,0.2-0.6,0.4-0.9,0.6 c-1.7,1.1-3.2,2.5-4.4,4.1c-1.1,1.5-1.7,3.2-1.7,4.8c0,2.3,1.3,4.2,3.1,4.9c0.2,0.1,0.4,0.1,0.6,0.1c0.4,0,0.7-0.3,0.7-0.7 c0-0.4-0.3-0.7-0.7-0.7c-0.2,0-0.4,0-0.6-0.1c-1.3-0.5-2.2-1.9-2.2-3.6c0-1.2,0.5-2.5,1.4-3.7c1-1.3,2.4-2.5,3.9-3.5 c0.3-0.2,0.6-0.4,0.9-0.6c0.5-0.3,0.9-0.6,1.4-0.9c0.9-0.6,1.6-1.1,2.1-1.5c1-0.9,1.6-1.8,1.6-2.9c0-1.3-0.8-2.3-2-2.3 c-0.8,0-1.6,0.5-2.1,1.3c-0.5,0.8-0.7,1.7-0.7,2.4c0,0.4,0.3,0.7,0.7,0.7c0.4,0,0.7-0.3,0.7-0.7c0-0.5,0.1-1.1,0.4-1.6 c0.3-0.4,0.7-0.7,1-0.7c0.4,0,0.6,0.3,0.6,0.9c0,0.8-0.5,1.5-1.4,2.3C32.1,46.5,31.4,47,30.9,47.4z" fill="${color}" transform="scale(1.5) translate(-5, -5)" />`;
+        // Clave de Sol (Unicode: 𝄞)
+        clefPath = `<text x="15" y="62" font-size="65" font-family="serif" fill="${color}">&#119070;</text>`;
     } else {
-        // Clave de Fá
-        clefPath = `
-            <g transform="scale(1.3) translate(12, 18)" fill="${color}">
-                <path d="M0,12c0,0,0-12,12-12s12,10,12,10s0,15-15,25" fill="none" stroke="${color}" stroke-width="3" />
-                <circle cx="3" cy="12" r="3" />
-                <circle cx="28" cy="8" r="2" />
-                <circle cx="28" cy="16" r="2" />
-            </g>`;
+        // Clave de Fá (Unicode: 𝄢)
+        clefPath = `<text x="15" y="52" font-size="65" font-family="serif" fill="${color}">&#119074;</text>`;
     }
 
     return `
@@ -282,17 +281,9 @@ function createStaffBase(clefType = 'sol') {
 }
 
 function renderNote(note) {
-    const noteLayer = document.getElementById('note-layer');
-    if (!noteLayer) {
-        renderEmptyStaff();
-        return renderNote(note);
-    }
-
-    // Redesenhar a pauta com a clave correta se estivermos no modo "ambas"
-    if (state.selectedClef === 'both') {
-        const svg = createStaffBase(note.clef);
-        elements.staffVisual.innerHTML = svg;
-    }
+    // Redesenhar a pauta sempre para garantir a clave correta
+    const svg = createStaffBase(note.clef);
+    elements.staffVisual.innerHTML = svg;
 
     let content = '';
     const color = 'var(--staff-fg)';

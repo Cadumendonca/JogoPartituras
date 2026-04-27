@@ -287,6 +287,30 @@ body {
     box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
 }
 
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--glass-border);
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.secondary-btn:hover {
+    background: var(--glass-border);
+    transform: scale(1.02);
+}
+
 .error-text {
     color: var(--error);
 }
